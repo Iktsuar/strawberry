@@ -1,0 +1,65 @@
+<!DOCTYPE html >
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>cumulative from 1 after page loaded </title>
+
+ <style>
+ div {
+text-align: center;
+ font-size: 100px;
+ padding: 100px;
+ }
+ 
+ button {
+ display: block;
+ margin: 50px auto;
+ width: 500px;
+height: 100px;
+font-size: 30px;
+}
+ span {
+color: crimson
+}
+</style>
+
+</head>
+
+ <div>
+    <button onclick="timerElement()">Timing start</button>
+    <!--多次点击会如何?如何让按钮只可点击一次？-->
+    <!--可考虑一个重置按钮-->
+    <div id="demo">
+ </div>
+
+
+ <script>
+    //获取到计时器的DOM元素
+     var timerElement = document.getElementById('timer');
+     var count = 0;
+     var timerInterval = null;
+
+    //点击计时器时触发的函数
+     timerElement.addEventListener('click', function() {
+     count++; //每次点击计数器，计数器加1
+ 
+    //如果为奇数次点击，则让计时器每秒递增1
+     if (count % 2 !== 0) {
+     if (timerInterval) clearInterval(timerInterval);
+     timerInterval = setInterval(function() {
+     timerElement.textContent = parseInt(timerElement.textContent) + 1;
+     }, 1000);
+
+    //如果为偶数次点击，则暂停计时器
+    } else { 
+     clearInterval(timerInterval);
+     timerInterval = null;
+     }
+    });
+
+
+  </script>
+</body>
+
+</html>
