@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>cumulative from 1 after page loaded </title>
+
+	<style>
+		div {
+			text-align: center;
+			font-size: 100px;
+			padding: 100px;
+		}
+
+		button {
+			display: block;
+			margin: 50px auto;
+			width: 500px;
+			height: 100px;
+			font-size: 30px;
+		}
+
+		span {
+			color: crimson
+		}
+
+		.timerDiv {
+			display: flex;
+			flex-flow: row nowrap;
+			font-size: 50px;
+			justify-content: center;
+		}
+	</style>
+
+</head>
+<body>
+	<div>
+		<button id="timer">Timing start</button>
+		<button id="cleartimer">Clear</button>
+		<!--多次点击会如何?如何让按钮只可点击一次？-->
+		<!--可考虑一个重置按钮-->
+		<div class="timerDiv">
+			Time passed: <span id="textContent">0</span>s
+	</div>
+
+
+	<script>
+		//获取到计时器的DOM元素
+		var timerElement = document.getElementById('timer');
+		var cleartimer = document.getElementById('cleartimer');
+		var count = 0;
+		var timerInterval = null;
+		var textContent = document.getElementById('textContent');
+		//点击计时器时触发的函数
+		timerElement.addEventListener('click', function() {
+			count++; //每次点击计数器，计数器加1
+
+			//如果为奇数次点击，则让计时器每秒递增1
+			if (count % 2 !== 0) {
+				timerElement.textContent = 'Timing stop';
+				if (timerInterval) {
+					clearInterval(timerInterval);
+				}
+				timerInterval = setInterval(function() {
+					textContent.textContent = parseInt(textContent.textContent) + 1;
+				}, 1000);
+
+				
+			} else {
+				timerElement.textContent = 'Timing start';
+				clearInterval(timerInterval);
+				timerInterval = null;
+			}
+		});
+		//点击清空触发的函数
+		cleartimer.addEventListener('click', function() {
+			timerElement.textContent = 'Timing start';
+			clearInterval(timerInterval);
+			timerInterval = null;
+			count = 0; //每次点击计数器，计数器加1
+			textContent.textContent = 0
+
+		});
+	</script>
+</body>
+
+</html>
